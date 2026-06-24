@@ -1,0 +1,22 @@
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <h1>Portal<br>Acadêmico</h1>
+    <span>Gestão Universitária</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-label">Menu</div>
+    <div class="nav-item">
+      <a href="/" class="<%= active === 'home' ? 'active' : '' %>"><i class="bi bi-house-door"></i> Início</a>
+    </div>
+    <div class="nav-label">Módulos</div>
+    <div class="nav-item">
+      <a href="/alunos" class="<%= active === 'alunos' ? 'active' : '' %>"><i class="bi bi-people"></i> Alunos</a>
+    </div>
+    <div class="nav-item">
+      <a href="/professores" class="<%= active === 'professores' ? 'active' : '' %>"><i class="bi bi-person-badge"></i> Professores</a>
+    </div>
+    <div class="nav-item">
+      <a href="/materias" class="<%= active === 'materias' ? 'active' : '' %>"><i class="bi bi-book"></i> Matérias</a>
+    </div>
+  </nav>
+</aside>

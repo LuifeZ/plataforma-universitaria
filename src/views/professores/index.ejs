@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professores — Portal Acadêmico</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <%- include('../partials/sidebar', { active: 'professores' }) %>
+
+  <main class="main">
+    <div class="page-header">
+      <div>
+        <h2>Professores</h2>
+        <p>Gerencie os professores cadastrados no sistema.</p>
+      </div>
+      <a href="/professores/novo" class="btn-new">
+        <i class="bi bi-plus-lg"></i> Novo Professor
+      </a>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-icon" style="background:#f0fdf4; color:#22c55e;"><i class="bi bi-person-badge"></i></div>
+        <div>
+          <strong><%= professores.length %></strong>
+          <span>Total de professores</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <div class="table-toolbar">
+        <div class="search-box">
+          <i class="bi bi-search"></i>
+          <input type="text" id="searchInput" placeholder="Buscar professor..." onkeyup="filtrarTabela()" />
+        </div>
+      </div>
+
+      <table id="tabelaProfessores">
+        <thead>
+          <tr>
+            <th>Professor</th>
+            <th>E-mail</th>
+            <th>CPF</th>
+            <th>Disciplinas</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (professores.length > 0) { %>
+            <% professores.forEach(professor => { %>
+            <tr>
+              <td>
+                <div class="cell-flex">
+                  <div class="avatar" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
+                    <%= professor.nome.charAt(0).toUpperCase() %>
+                  </div>
+                  <%= professor.nome %>
+                </div>
+              </td>
+              <td><%= professor.email %></td>
+              <td><%= professor.cpf || '—' %></td>
+              <td><%= professor.disciplinas || '—' %></td>
+              <td>
+                <a href="/professores/<%= professor.id %>/editar" class="btn-action btn-edit">
+                  <i class="bi bi-pencil"></i> Editar
+                </a>
+                <form action="/professores/<%= professor.id %>?_method=DELETE" method="POST" style="display:inline">
+                  <button type="submit" class="btn-action btn-delete" onclick="return confirm('Excluir este professor?')">
+                    <i class="bi bi-trash"></i> Excluir
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="5">
+                <div class="empty-state">
+                  <i class="bi bi-person-badge"></i>
+                  <p>Nenhum professor cadastrado ainda.<br>Clique em <strong>Novo Professor</strong> para começar.</p>
+                </div>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    function filtrarTabela() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('#tabelaProfessores tbody tr');
+      rows.forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(input) ? '' : 'none';
+      });
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
